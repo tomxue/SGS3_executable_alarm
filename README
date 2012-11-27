@@ -1,0 +1,48 @@
+Run on Ubuntu:
+    counter=501861 counter=5018Alarm clock
+    tomxue@ubuntu:~/mycode/0___GitHub/alarm$ 
+    
+Run on SGS3 phone:
+    counter=51699 counter=51700 Alarm clock 
+    142|shell@android:/data/tom # 
+
+
+How to make an executable for my SGS3 phone:
+    Toolchain:
+        tomxue@ubuntu:~/mycode/0___GitHub/alarm$ export | grep arm-
+        declare -x PATH=".../usr/local/arm/arm-2009q1/bin..."
+
+        As we can see, the arm-2009q1 toolchain (for Beagle Board Ubuntu) is available and also workable for my SGS3 phone
+
+    Compile:
+        $ arm-none-linux-gnueabi-gcc -o ex ex.c --static 
+
+    Push to the phone:
+        $ adb push ex /sdcard/Tom
+        699 KB/s (587058 bytes in 0.819s)
+        
+    
+        shell@android:/sdcard/Tom $ ls -al
+        -rw-rw-r-- root     sdcard_rw    53024 2012-11-27 14:45 buildchain.ko
+        -rw-rw-r-- root     sdcard_rw   587058 2012-11-27 17:49 ex
+    
+    Make it executable but failed:
+        shell@android:/sdcard/Tom $ su
+        shell@android:/mnt/sdcard/Tom # chmod 700 ex
+        shell@android:/mnt/sdcard/Tom # ls -al
+        -rw-rw-r-- root     sdcard_rw    53024 2012-11-27 14:45 buildchain.ko
+        -rw-rw-r-- root     sdcard_rw   587058 2012-11-27 17:49 ex
+        
+    Change it to other path and make it executable:
+        142|shell@android:/data/tom # cp /sdcard/Tom/ex .                              
+        shell@android:/data/tom # ls -al                                               
+        -rw-rw-r-- root     root       587058 2012-11-27 17:52 ex
+        -rwx------ root     root       587302 2012-10-21 22:54 hello
+        shell@android:/data/tom # chmod 700 ex                                         
+        shell@android:/data/tom # ls -al                                               
+        -rwx------ root     root       587058 2012-11-27 17:52 ex
+        -rwx------ root     root       587302 2012-10-21 22:54 hello
+
+    Run:
+        counter=54551 counter=54552 counter=Alarm clock 
+        142|shell@android:/data/tom # 
